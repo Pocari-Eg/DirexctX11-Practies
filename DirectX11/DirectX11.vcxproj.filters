@@ -60,12 +60,6 @@
     <ClInclude Include="TextureClass.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="TextureShaderClass.h">
-      <Filter>헤더 파일\ShaderClass</Filter>
-    </ClInclude>
-    <ClInclude Include="Colorshaderclass.h">
-      <Filter>헤더 파일\ShaderClass</Filter>
-    </ClInclude>
     <ClInclude Include="LightShaderClass.h">
       <Filter>헤더 파일\ShaderClass</Filter>
     </ClInclude>
@@ -73,6 +67,12 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="DDSTextureLoader.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SafeRelease.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -120,12 +120,6 @@
     <ClCompile Include="TextureClass.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="TextureShaderClass.cpp">
-      <Filter>소스 파일\ShaderClass</Filter>
-    </ClCompile>
-    <ClCompile Include="Colorshaderclass.cpp">
-      <Filter>소스 파일\ShaderClass</Filter>
-    </ClCompile>
     <ClCompile Include="LightShaderClass.cpp">
       <Filter>소스 파일\ShaderClass</Filter>
     </ClCompile>
@@ -137,18 +131,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="color.vs">
-      <Filter>헤더 파일\Shader</Filter>
-    </None>
-    <None Include="color.ps">
-      <Filter>헤더 파일\Shader</Filter>
-    </None>
-    <None Include="Texture.vs">
-      <Filter>헤더 파일\Shader</Filter>
-    </None>
-    <None Include="Texture.ps">
-      <Filter>헤더 파일\Shader</Filter>
-    </None>
     <None Include="Light.ps">
       <Filter>헤더 파일\Shader</Filter>
     </None>

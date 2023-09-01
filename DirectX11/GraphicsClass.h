@@ -14,7 +14,6 @@ class CameraClass;
 class ModelClass;
 class LightClass;
 class LightShaderClass;
-class ModelLoader;
 
 class GraphicsClass
 {
@@ -32,7 +31,6 @@ private:
 
 private:
 
-	ModelLoader* ourModel = nullptr;
 	D3DClass* m_Direct3D = nullptr;
 	CameraClass* m_Camera = nullptr;
 	ModelClass* m_Model = nullptr;
