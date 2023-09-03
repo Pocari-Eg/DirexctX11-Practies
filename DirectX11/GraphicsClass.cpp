@@ -45,12 +45,18 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	}
 
 	// 카메라 포지션 설정
-	m_Camera->SetPosition(0.0f, 0.0f, -13.0f);
+	m_Camera->SetPosition(0.0f, 0.0f, -400);
 
 	// m_Model 객체 생성
 	m_Model = new ModelClass;
 	if (!m_Model)
 	{
+		return false;
+	}
+
+	if (!m_Model->Load(hwnd, m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), "RotatingCube.3ds"))
+	{
+		MessageBox(hwnd, L"Could not load model object.", L"Error", MB_OK);
 		return false;
 	}
 
@@ -153,7 +159,8 @@ bool GraphicsClass::Render(float rotation)
 	m_Direct3D->GetProjectionMatrix(projectionMatrix);
 
 
-	//worldMatrix = XMMatrixRotationY(rotation);
+
+	worldMatrix = XMMatrixRotationY(rotation);
 	// 모델 버텍스와 인덱스 버퍼를 그래픽 파이프 라인에 배치하여 드로잉을 준비합니다.
 	m_Model->Render(m_Direct3D->GetDeviceContext());
 
