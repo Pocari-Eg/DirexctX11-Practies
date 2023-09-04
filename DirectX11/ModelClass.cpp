@@ -33,11 +33,15 @@ bool ModelClass::Initialize(ID3D11Device* device,char* modelfilename, WCHAR* Fil
     }
 
     // 이 모델의 텍스처를 로드합니다.
-    return LoadTexture(device, Filename);
+   // return LoadTexture(device, Filename);
+
+    return true;
 }
 
 void ModelClass::Shutdown()
 {
+
+
     ReleaseTexture();
 
     ShutdownBuffers();
@@ -47,7 +51,11 @@ void ModelClass::Shutdown()
 
 void ModelClass::Render(ID3D11DeviceContext* deviceContext)
 {
-    RenderBuffers(deviceContext);
+    //RenderBuffers(deviceContext);
+
+    for (size_t i = 0; i < meshes_.size(); ++i) {
+        meshes_[i].Draw(deviceContext);
+    }
 }
 
 int ModelClass::GetIndexCount()
@@ -86,71 +94,74 @@ bool ModelClass::InitializeBuffers(ID3D11Device* device)
 {
 
 
-    // 정점 배열을 만듭니다.
-    VertexType* vertices = new VertexType[m_vertexCount];
-    if (!vertices)
-    {
-        return false;
-    }
+    //// 정점 배열을 만듭니다.
+    //VertexType* vertices = new VertexType[m_vertexCount];
+    //if (!vertices)
+    //{
+    //    return false;
+    //}
 
-    // 인덱스 배열을 만듭니다.
-    unsigned long* indices = new unsigned long[m_indexCount];
-    if (!indices)
-    {
-        return false;
-    }
+    //// 인덱스 배열을 만듭니다.
+    //unsigned long* indices = new unsigned long[m_indexCount];
+    //if (!indices)
+    //{
+    //    return false;
+    //}
 
-    for (int i = 0; i < m_vertexCount; i++)
-    {
-        vertices[i].position = XMFLOAT3(m_vertices[i].X, m_vertices[i].Y, m_vertices[i].Z);
-        vertices[i].texture = XMFLOAT2(m_vertices[i].texcoord.x, m_vertices[i].texcoord.y);
-      //  vertices[i].noraml = XMFLOAT3(m_model[i].nx, m_model[i].ny, m_model[i].nz);
+    //for (int i = 0; i < m_vertexCount; i++)
+    //{
+    //    vertices[i].position = XMFLOAT3(m_vertices[i].X, m_vertices[i].Y, m_vertices[i].Z);
+    //    vertices[i].texture = XMFLOAT2(m_vertices[i].texcoord.x, m_vertices[i].texcoord.y);
+    //  // vertices[i].noraml = XMFLOAT3(m_vertices[i].n_X, m_vertices[i].n_Y, m_vertices[i].n_Z);
 
-        indices[i] = i;
-    }
+    //    indices[i] = i;
+    //}
 
 
-    D3D11_BUFFER_DESC vertexBufferDesc;
-    vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-    vertexBufferDesc.ByteWidth = sizeof(VertexType) * m_vertexCount;
-    vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-    vertexBufferDesc.CPUAccessFlags = 0;
-    vertexBufferDesc.MiscFlags = 0;
-    vertexBufferDesc.StructureByteStride = 0;
 
-    D3D11_SUBRESOURCE_DATA vertexData;
-    vertexData.pSysMem = vertices;
-    vertexData.SysMemPitch = 0;
-    vertexData.SysMemSlicePitch = 0;
 
-    if (FAILED(device->CreateBuffer(&vertexBufferDesc, &vertexData, &m_vertexBuffer)))
-    {
-        return false;
-    }
+    //D3D11_BUFFER_DESC vertexBufferDesc;
+    //vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+    //vertexBufferDesc.ByteWidth = sizeof(VertexType) * m_vertexCount;
+    //vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+    //vertexBufferDesc.CPUAccessFlags = 0;
+    //vertexBufferDesc.MiscFlags = 0;
+    //vertexBufferDesc.StructureByteStride = 0;
 
-    D3D11_BUFFER_DESC indexBufferDesc;
-    indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-    indexBufferDesc.ByteWidth = sizeof(unsigned long) * m_indexCount;
-    indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-    indexBufferDesc.CPUAccessFlags = 0;
-    indexBufferDesc.MiscFlags = 0;
-    indexBufferDesc.StructureByteStride = 0;
+    //D3D11_SUBRESOURCE_DATA vertexData;
+    //vertexData.pSysMem = vertices;
+    //vertexData.SysMemPitch = 0;
+    //vertexData.SysMemSlicePitch = 0;
 
-    D3D11_SUBRESOURCE_DATA indexData;
-    indexData.pSysMem = indices;
-    indexData.SysMemPitch = 0;
-    indexData.SysMemSlicePitch = 0;
+    //if (FAILED(device->CreateBuffer(&vertexBufferDesc, &vertexData, &m_vertexBuffer)))
+    //{
+    //    return false;
+    //}
 
-    if (FAILED(device->CreateBuffer(&indexBufferDesc, &indexData, &m_indexBuffer)))
-    {
-        return false;
-    }
+    //D3D11_BUFFER_DESC indexBufferDesc;
+    //indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+    //indexBufferDesc.ByteWidth = sizeof(unsigned long) * m_indexCount;
+    //indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+    //indexBufferDesc.CPUAccessFlags = 0;
+    //indexBufferDesc.MiscFlags = 0;
+    //indexBufferDesc.StructureByteStride = 0;
 
-    delete[] vertices;
-    vertices = 0;
+    //D3D11_SUBRESOURCE_DATA indexData;
+    //indexData.pSysMem = indices;
+    //indexData.SysMemPitch = 0;
+    //indexData.SysMemSlicePitch = 0;
 
-    delete[] indices;
-    indices = 0;
+    //if (FAILED(device->CreateBuffer(&indexBufferDesc, &indexData, &m_indexBuffer)))
+    //{
+    //    return false;
+    //}
+
+    //delete[] vertices;
+    //vertices = 0;
+
+    //delete[] indices;
+    //indices = 0;
+
 
     return true;
 }
@@ -175,9 +186,10 @@ void ModelClass::RenderBuffers(ID3D11DeviceContext* deviceContext)
     unsigned int stride = sizeof(VertexType);
     unsigned int offset = 0;
 
-    deviceContext->IASetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
-    deviceContext->IASetIndexBuffer(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
-    deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+  //  deviceContext->PSSetShaderResources(0, 1, &m_textures[0].texture);
+  //  deviceContext->IASetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
+ //   deviceContext->IASetIndexBuffer(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
+ //  
 }
 
 bool ModelClass::LoadTexture(ID3D11Device* device, WCHAR* filename)
@@ -185,6 +197,7 @@ bool ModelClass::LoadTexture(ID3D11Device* device, WCHAR* filename)
 
     m_Texture = new TextureClass;
     if (!m_Texture)return false;
+
 
     return m_Texture->Initialize(device, filename);
 }
@@ -271,60 +284,56 @@ void ModelClass::processNode(aiNode* node, const aiScene* scene)
 {
     for (UINT i = 0; i < node->mNumMeshes; i++) {
         aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-       this->processMesh(mesh, scene);
+        meshes_.push_back(this->processMesh(mesh, scene));
     }
 
     for (UINT i = 0; i < node->mNumChildren; i++) {
         this->processNode(node->mChildren[i], scene);
     }
-
 }
+Mesh ModelClass::processMesh(aiMesh * mesh, const aiScene * scene) {
+	// Data to fill
+	std::vector<VERTEX> vertices;
+	std::vector<UINT> indices;
+	std::vector<Texture> textures;
 
-void ModelClass::processMesh(aiMesh* mesh, const aiScene* scene)
-{
-    // Data to fill
-    std::vector<VERTEX> vertices;
-    std::vector<UINT> indices;
-    std::vector<Texture> textures;
+	// Walk through each of the mesh's vertices
+	for (UINT i = 0; i < mesh->mNumVertices; i++) {
+		VERTEX vertex;
 
-    // Walk through each of the mesh's vertices
-    for (UINT i = 0; i < mesh->mNumVertices; i++) {
-        VERTEX vertex;
+		vertex.X = mesh->mVertices[i].x;
+		vertex.Y = mesh->mVertices[i].y;
+		vertex.Z = mesh->mVertices[i].z;
 
-        vertex.X = mesh->mVertices[i].x;
-        vertex.Y = mesh->mVertices[i].y;
-        vertex.Z = mesh->mVertices[i].z;
+        vertex.n_X = mesh->mNormals[i].x;
+        vertex.n_Y = mesh->mNormals[i].y;
+        vertex.n_Z = mesh->mNormals[i].z;
 
-        if (mesh->mTextureCoords[0]) {
-            vertex.texcoord.x = (float)mesh->mTextureCoords[0][i].x;
-            vertex.texcoord.y = (float)mesh->mTextureCoords[0][i].y;
-        }
 
-        vertices.push_back(vertex);
-    }
+		if (mesh->mTextureCoords[0]) {
+			vertex.texcoord.x = (float)mesh->mTextureCoords[0][i].x;
+			vertex.texcoord.y = (float)mesh->mTextureCoords[0][i].y;
+		}
 
-    for (UINT i = 0; i < mesh->mNumFaces; i++) {
-        aiFace face = mesh->mFaces[i];
+		vertices.push_back(vertex);
+	}
 
-        for (UINT j = 0; j < face.mNumIndices; j++)
-            indices.push_back(face.mIndices[j]);
-    }
+	for (UINT i = 0; i < mesh->mNumFaces; i++) {
+		aiFace face = mesh->mFaces[i];
 
-    if (mesh->mMaterialIndex >= 0) {
-        aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+		for (UINT j = 0; j < face.mNumIndices; j++)
+			indices.push_back(face.mIndices[j]);
+	}
 
-        std::vector<Texture> diffuseMaps = this->loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse", scene);
-        textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-    }
+	if (mesh->mMaterialIndex >= 0) {
+		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 
-    m_vertices = vertices;
-    m_indices = indices;
-    m_textures = textures;
+		std::vector<Texture> diffuseMaps = this->loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse", scene);
+		textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
+	}
 
-    m_vertexCount = m_vertices.size();
-    m_indexCount = m_indices.size();
+	return Mesh(dev_, vertices, indices, textures);
 }
-
 std::vector<Texture> ModelClass::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName, const aiScene* scene)
 {
     std::vector<Texture> textures;

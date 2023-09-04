@@ -56,8 +56,8 @@ void CameraClass::Render()
     positionVector = XMLoadFloat3(&position);
 
     lookAt.x = 0.0f;
-    lookAt.y = 0.0f;
-    lookAt.z = 1.0f;
+    lookAt.y = 100.0f;
+    lookAt.z = 0.0f;
 
     lookAtVector = XMLoadFloat3(&lookAt);
 

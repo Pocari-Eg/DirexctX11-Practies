@@ -32,10 +32,10 @@ void LightShaderClass::Shutdown()
 
 
 bool LightShaderClass::Render(ID3D11DeviceContext* deviceContext, int indexCount, XMMATRIX worldMatrix, XMMATRIX viewMatrix,
-	XMMATRIX projectionMatrix, ID3D11ShaderResourceView* texture, XMFLOAT3 lightDirection, XMFLOAT4 diffuseColor)
+	XMMATRIX projectionMatrix, XMFLOAT3 lightDirection, XMFLOAT4 diffuseColor)
 {
 	// 렌더링에 사용할 셰이더 매개 변수를 설정합니다.
-	if (!SetShaderParameters(deviceContext, worldMatrix, viewMatrix, projectionMatrix, texture, lightDirection, diffuseColor))
+	if (!SetShaderParameters(deviceContext, worldMatrix, viewMatrix, projectionMatrix, lightDirection, diffuseColor))
 	{
 		return false;
 	}
@@ -270,7 +270,7 @@ void LightShaderClass::OutputShaderErrorMessage(ID3D10Blob* errorMessage, HWND h
 
 
 bool LightShaderClass::SetShaderParameters(ID3D11DeviceContext* deviceContext, XMMATRIX worldMatrix, XMMATRIX viewMatrix,
-	XMMATRIX projectionMatrix, ID3D11ShaderResourceView* texture, XMFLOAT3 lightDirection, XMFLOAT4 diffuseColor)
+	XMMATRIX projectionMatrix,  XMFLOAT3 lightDirection, XMFLOAT4 diffuseColor)
 {
 	// 행렬을 transpose하여 셰이더에서 사용할 수 있게 합니다
 	worldMatrix = XMMatrixTranspose(worldMatrix);
@@ -301,8 +301,7 @@ bool LightShaderClass::SetShaderParameters(ID3D11DeviceContext* deviceContext, X
 	// 마지막으로 정점 셰이더의 상수 버퍼를 바뀐 값으로 바꿉니다.
 	deviceContext->VSSetConstantBuffers(bufferNumber, 1, &m_matrixBuffer);
 
-	// 픽셀 셰이더에서 셰이더 텍스처 리소스를 설정합니다.
-	deviceContext->PSSetShaderResources(0, 1, &texture);
+
 
 	// light constant buffer를 잠글 수 있도록 기록한다.
 	if (FAILED(deviceContext->Map(m_lightBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource)))
@@ -342,6 +341,7 @@ void LightShaderClass::RenderShader(ID3D11DeviceContext* deviceContext, int inde
 	// 픽셀 쉐이더에서 샘플러 상태를 설정합니다.
 	deviceContext->PSSetSamplers(0, 1, &m_sampleState);
 
+
 	// 삼각형을 그립니다.
-	deviceContext->DrawIndexed(indexCount, 0, 0);
+//	deviceContext->DrawIndexed(indexCount, 0, 0);
 }

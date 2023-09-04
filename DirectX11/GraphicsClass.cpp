@@ -31,7 +31,7 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	}
 
 	// Direct3D 객체 초기화
-	if(!m_Direct3D->Initialize(screenWidth, screenHeight, VSYNC_ENABLED, hwnd, FULL_SCREEN, SCREEN_DEPTH, SCREEN_NEAR))
+	if(!m_Direct3D->Initialize(screenWidth, screenHeight, VSYNC_ENABLED, hwnd, false, SCREEN_DEPTH, SCREEN_NEAR))
 	{
 		MessageBox(hwnd, L"Could not initialize Direct3D.", L"Error", MB_OK);
 		return false;
@@ -45,27 +45,10 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	}
 
 	// 카메라 포지션 설정
-	m_Camera->SetPosition(0.0f, 0.0f, -400);
+	m_Camera->SetPosition(0.0f, 4.0f, -400.0f);
 
-	// m_Model 객체 생성
-	m_Model = new ModelClass;
-	if (!m_Model)
-	{
-		return false;
-	}
 
-	if (!m_Model->Load(hwnd, m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), "RotatingCube.3ds"))
-	{
-		MessageBox(hwnd, L"Could not load model object.", L"Error", MB_OK);
-		return false;
-	}
 
-	if (!m_Model->Initialize(m_Direct3D->GetDevice(), "../DirectX11/data/cube.txt", L"../DirectX11/data/seafloor.dds"))
-	{
-		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
-		return false;
-
-	}
 
 
 	// m_ColorShader 객체 생성
@@ -81,6 +64,20 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		MessageBox(hwnd, L"Could not initialize the Light shader object.", L"Error", MB_OK);
 		return false;
 	}
+
+	// m_Model 객체 생성
+	m_Model = new ModelClass;
+	if (!m_Model)
+	{
+		return false;
+	}
+
+	if (!m_Model->Load(hwnd, m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), "test1.3ds"))
+	{
+		MessageBox(hwnd, L"Could not load model object.", L"Error", MB_OK);
+		return false;
+	}
+
 
 	m_Light = new LightClass;
 	if (!m_Light)return false;
@@ -162,14 +159,14 @@ bool GraphicsClass::Render(float rotation)
 
 	worldMatrix = XMMatrixRotationY(rotation);
 	// 모델 버텍스와 인덱스 버퍼를 그래픽 파이프 라인에 배치하여 드로잉을 준비합니다.
-	m_Model->Render(m_Direct3D->GetDeviceContext());
+	
 
 	// 색상 쉐이더를 사용하여 모델을 렌더링합니다.
-	if (!m_LightShader->Render(m_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix,m_Model->GetTexture(),m_Light->GetDirection(),m_Light->GetDiffuseColor()))
+	if (!m_LightShader->Render(m_Direct3D->GetDeviceContext(), 0, worldMatrix, viewMatrix, projectionMatrix,m_Light->GetDirection(),m_Light->GetDiffuseColor()))
 	{
 		return false;
 	}
-
+	m_Model->Render(m_Direct3D->GetDeviceContext());
 
 	// 버퍼의 내용을 화면에 출력합니다
 	m_Direct3D->EndScene();

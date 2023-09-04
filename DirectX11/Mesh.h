@@ -17,6 +17,7 @@ using namespace DirectX;
 struct VERTEX {
 	FLOAT X, Y, Z;
 	XMFLOAT2 texcoord;
+    FLOAT n_X=0.0f, n_Y=0.0f, n_Z=0.0f;
 };
 
 struct Texture {
@@ -45,11 +46,11 @@ public:
             IndexBuffer_(nullptr) {
         this->setupMesh(this->dev_);
     }
-
-    void Draw(ID3D11DeviceContext *devcon) {
+    void Draw(ID3D11DeviceContext* devcon) {
         UINT stride = sizeof(VERTEX);
         UINT offset = 0;
 
+        devcon->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
         devcon->IASetVertexBuffers(0, 1, &VertexBuffer_, &stride, &offset);
         devcon->IASetIndexBuffer(IndexBuffer_, DXGI_FORMAT_R32_UINT, 0);
 
