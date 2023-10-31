@@ -78,6 +78,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Users\cksdu\Desktop\DirexctX11-Practies\DirectX11;C:\Users\cksdu\Desktop\DirexctX11-Practies\DirectX11\source;C:\Users\cksdu\Desktop\DirexctX11-Practies\DirectX11\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\cksdu\Desktop\DirexctX11-Practies\DirectX11\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -120,6 +122,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>assimp-vc142-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -150,26 +153,15 @@
     <ClInclude Include="InputClass.h" />
     <ClInclude Include="LightClass.h" />
     <ClInclude Include="LightShaderClass.h" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="ModelClass.h" />
+    <ClInclude Include="ModelLoader.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="SystemClass.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TextureClass.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="CameraClass.cpp" />
-    <ClCompile Include="D3DClass.cpp" />
-    <ClCompile Include="DDSTextureLoader.cpp" />
-    <ClCompile Include="DirectX11.cpp" />
-    <ClCompile Include="GraphicsClass.cpp" />
-    <ClCompile Include="InputClass.cpp" />
-    <ClCompile Include="LightClass.cpp" />
-    <ClCompile Include="LightShaderClass.cpp" />
-    <ClCompile Include="ModelClass.cpp" />
-    <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="SystemClass.cpp" />
-    <ClCompile Include="TextureClass.cpp" />
+    <ClInclude Include="TextureLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX11.rc" />
@@ -177,6 +169,22 @@
   <ItemGroup>
     <Image Include="DirectX11.ico" />
     <Image Include="small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\CameraClass.cpp" />
+    <ClCompile Include="source\D3DClass.cpp" />
+    <ClCompile Include="source\DDSTextureLoader.cpp" />
+    <ClCompile Include="source\DirectX11.cpp" />
+    <ClCompile Include="source\GraphicsClass.cpp" />
+    <ClCompile Include="source\InputClass.cpp" />
+    <ClCompile Include="source\LightClass.cpp" />
+    <ClCompile Include="source\LightShaderClass.cpp" />
+    <ClCompile Include="source\ModelClass.cpp" />
+    <ClCompile Include="source\ModelLoader.cpp" />
+    <ClCompile Include="source\stdafx.cpp" />
+    <ClCompile Include="source\SystemClass.cpp" />
+    <ClCompile Include="source\TextureClass.cpp" />
+    <ClCompile Include="source\TextureLoader.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

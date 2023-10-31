@@ -1,14 +1,9 @@
-﻿  CameraClass.cpp
-  D3DClass.cpp
-  DDSTextureLoader.cpp
-  DirectX11.cpp
-  GraphicsClass.cpp
-  InputClass.cpp
-  LightClass.cpp
-  LightShaderClass.cpp
-  ModelClass.cpp
-  stdafx.cpp
-  SystemClass.cpp
-  TextureClass.cpp
+﻿  ModelLoader.cpp
+C:\Users\cksdu\Desktop\DirexctX11-Practies\DirectX11\Mesh.h(55,1): warning C4267: '인수': 'size_t'에서 'UINT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\cksdu\Desktop\DirexctX11-Practies\DirectX11\Mesh.h(75,1): warning C4267: '=': 'size_t'에서 'UINT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\cksdu\Desktop\DirexctX11-Practies\DirectX11\Mesh.h(89,1): warning C4267: '=': 'size_t'에서 'UINT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  TextureLoader.cpp
   코드를 생성하고 있습니다...
+C:\Users\cksdu\Desktop\DirexctX11-Practies\DirectX11\source\ModelLoader.cpp(183): warning C4715: 'ModelLoader::determineTextureType': 모든 제어 경로에서 값을 반환하지는 않습니다.
+C:\Users\cksdu\Desktop\DirexctX11-Practies\DirectX11\Mesh.h(99): warning C4715: 'Mesh::setupMesh': 모든 제어 경로에서 값을 반환하지는 않습니다.
   DirectX11.vcxproj -> C:\Users\cksdu\Desktop\DirexctX11-Practies\x64\Debug\DirectX11.exe
