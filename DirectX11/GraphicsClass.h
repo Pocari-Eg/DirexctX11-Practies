@@ -30,7 +30,6 @@ private:
 	bool Render(float);
 
 private:
-
 	D3DClass* m_Direct3D = nullptr;
 	CameraClass* m_Camera = nullptr;
 	ModelClass* m_Model = nullptr;

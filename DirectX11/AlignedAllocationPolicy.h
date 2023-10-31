@@ -1,5 +1,5 @@
 #pragma once
-#include<cstdlib>
+
 // warning C4316 Ã³¸®¿ë
 template<size_t Alignment>
 class AlignedAllocationPolicy

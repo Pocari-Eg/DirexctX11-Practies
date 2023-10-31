@@ -1,7 +1,6 @@
 #pragma once
-#include"framework.h"
-#include "AlignedAllocationPolicy.h"
-class CameraClass :  public AlignedAllocationPolicy<16>
+
+class CameraClass : public AlignedAllocationPolicy<16>
 {
 public:
 	CameraClass();
@@ -16,9 +15,9 @@ public:
 
 	void Render();
 	void GetViewMatrix(XMMATRIX&);
+
 private:
 	XMFLOAT3 m_position;
 	XMFLOAT3 m_rotation;
 	XMMATRIX m_viewMatrix;
 };
-

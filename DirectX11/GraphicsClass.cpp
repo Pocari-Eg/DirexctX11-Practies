@@ -1,10 +1,11 @@
-#include "framework.h"
+#include "stdafx.h"
 #include "d3dclass.h"
 #include "cameraclass.h"
 #include "modelclass.h"
-#include "LightClass.h"
-#include "LightShaderClass.h"
+#include "lightclass.h"
+#include "lightshaderclass.h"
 #include "graphicsclass.h"
+
 
 GraphicsClass::GraphicsClass()
 {
@@ -31,7 +32,7 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	}
 
 	// Direct3D 객체 초기화
-	if(!m_Direct3D->Initialize(screenWidth, screenHeight, VSYNC_ENABLED, hwnd, false, SCREEN_DEPTH, SCREEN_NEAR))
+	if(!m_Direct3D->Initialize(screenWidth, screenHeight, VSYNC_ENABLED, hwnd, FULL_SCREEN, SCREEN_DEPTH, SCREEN_NEAR))
 	{
 		MessageBox(hwnd, L"Could not initialize Direct3D.", L"Error", MB_OK);
 		return false;
@@ -45,25 +46,7 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	}
 
 	// 카메라 포지션 설정
-	m_Camera->SetPosition(0.0f, 4.0f, -400.0f);
-
-
-
-
-
-	// m_ColorShader 객체 생성
-	m_LightShader = new LightShaderClass;
-	if (!m_LightShader)
-	{
-		return false;
-	}
-
-	// m_ColorShader 객체 초기화
-	if (!m_LightShader->Initialize(m_Direct3D->GetDevice(), hwnd))
-	{
-		MessageBox(hwnd, L"Could not initialize the Light shader object.", L"Error", MB_OK);
-		return false;
-	}
+	m_Camera->SetPosition(0.0f, 0.0f, -5.0f);
 
 	// m_Model 객체 생성
 	m_Model = new ModelClass;
@@ -72,16 +55,35 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		return false;
 	}
 
-	if (!m_Model->Load(hwnd, m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), "test1.3ds"))
+	// m_Model 객체 초기화
+	if (!m_Model->Initialize(m_Direct3D->GetDevice(), "../DirectX11/data/cube.txt", L"../DirectX11/data/seafloor.dds"))
 	{
-		MessageBox(hwnd, L"Could not load model object.", L"Error", MB_OK);
+		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
 		return false;
 	}
 
+	// m_LightShader 객체 생성
+	m_LightShader = new LightShaderClass;
+	if (!m_LightShader)
+	{
+		return false;
+	}
 
+	// m_LightShader 객체 초기화
+	if (!m_LightShader->Initialize(m_Direct3D->GetDevice(), hwnd))
+	{
+		MessageBox(hwnd, L"Could not initialize the light shader object.", L"Error", MB_OK);
+		return false;
+	}
+
+	// m_Light 객체 생성
 	m_Light = new LightClass;
-	if (!m_Light)return false;
+	if(!m_Light)
+	{
+		return false;
+	}
 
+	// m_Light 객체 초기화
 	m_Light->SetDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
 	m_Light->SetDirection(0.0f, 0.0f, 1.0f);
 
@@ -91,18 +93,21 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 
 void GraphicsClass::Shutdown()
 {
-	// m_ColorShader 객체 반환
-	if (m_Light)
+	// m_Light 객체 반환
+	if(m_Light)
 	{
 		delete m_Light;
 		m_Light = 0;
 	}
+
+	// m_LightShader 객체 반환
 	if (m_LightShader)
 	{
 		m_LightShader->Shutdown();
 		delete m_LightShader;
 		m_LightShader = 0;
 	}
+
 	// m_Model 객체 반환
 	if (m_Model)
 	{
@@ -119,7 +124,7 @@ void GraphicsClass::Shutdown()
 	}
 
 	// Direct3D 객체 반환
-	if(m_Direct3D)
+	if (m_Direct3D)
 	{
 		m_Direct3D->Shutdown();
 		delete m_Direct3D;
@@ -130,13 +135,16 @@ void GraphicsClass::Shutdown()
 
 bool GraphicsClass::Frame()
 {
-	// 그래픽 랜더링 처리
-
 	static float rotation = 0.0f;
 
-	rotation += (float)XM_PI * 0.005f;
-	if (rotation > 360.0f)rotation -= 360.0f;
-
+	// 각 프레임의 rotation 변수를 업데이트합니다.
+	rotation += (float)XM_PI * 0.01f;
+	if(rotation > 360.0f)
+	{
+		rotation -= 360.0f;
+	}
+	
+	// 그래픽 랜더링 처리
 	return Render(rotation);
 }
 
@@ -155,18 +163,18 @@ bool GraphicsClass::Render(float rotation)
 	m_Camera->GetViewMatrix(viewMatrix);
 	m_Direct3D->GetProjectionMatrix(projectionMatrix);
 
-
-
+	// 삼각형이 회전 할 수 있도록 회전 값으로 월드 행렬을 회전합니다.
 	worldMatrix = XMMatrixRotationY(rotation);
-	// 모델 버텍스와 인덱스 버퍼를 그래픽 파이프 라인에 배치하여 드로잉을 준비합니다.
-	
 
-	// 색상 쉐이더를 사용하여 모델을 렌더링합니다.
-	if (!m_LightShader->Render(m_Direct3D->GetDeviceContext(), 0, worldMatrix, viewMatrix, projectionMatrix,m_Light->GetDirection(),m_Light->GetDiffuseColor()))
+	// 모델 버텍스와 인덱스 버퍼를 그래픽 파이프 라인에 배치하여 드로잉을 준비합니다.
+	m_Model->Render(m_Direct3D->GetDeviceContext());
+
+	// Light 쉐이더를 사용하여 모델을 렌더링합니다.
+	if (!m_LightShader->Render(m_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix,
+								   m_Model->GetTexture(), m_Light->GetDirection(), m_Light->GetDiffuseColor()))
 	{
 		return false;
 	}
-	m_Model->Render(m_Direct3D->GetDeviceContext());
 
 	// 버퍼의 내용을 화면에 출력합니다
 	m_Direct3D->EndScene();

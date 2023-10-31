@@ -1,9 +1,7 @@
-
 #pragma once
-#include"framework.h"
+
 class TextureClass
 {
-
 public:
 	TextureClass();
 	TextureClass(const TextureClass&);
@@ -14,10 +12,7 @@ public:
 
 	ID3D11ShaderResourceView* GetTexture();
 
+
 private:
 	ID3D11ShaderResourceView* m_texture = nullptr;
-
-
-
 };
-
