@@ -155,14 +155,11 @@
     <ClCompile Include="source\DirectX11.cpp" />
     <ClCompile Include="source\GraphicsClass.cpp" />
     <ClCompile Include="source\InputClass.cpp" />
-    <ClCompile Include="source\LightClass.cpp" />
-    <ClCompile Include="source\LightShaderClass.cpp" />
-    <ClCompile Include="source\ModelClass.cpp" />
     <ClCompile Include="source\ModelLoader.cpp" />
     <ClCompile Include="source\stdafx.cpp" />
     <ClCompile Include="source\SystemClass.cpp" />
-    <ClCompile Include="source\TextureClass.cpp" />
     <ClCompile Include="source\TextureLoader.cpp" />
+    <ClCompile Include="source\TextureShaderClass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header\AlignedAllocationPolicy.h" />
@@ -174,17 +171,14 @@
     <ClInclude Include="header\framework.h" />
     <ClInclude Include="header\GraphicsClass.h" />
     <ClInclude Include="header\InputClass.h" />
-    <ClInclude Include="header\LightClass.h" />
-    <ClInclude Include="header\LightShaderClass.h" />
     <ClInclude Include="header\Mesh.h" />
-    <ClInclude Include="header\ModelClass.h" />
     <ClInclude Include="header\ModelLoader.h" />
     <ClInclude Include="header\Resource.h" />
     <ClInclude Include="header\stdafx.h" />
     <ClInclude Include="header\SystemClass.h" />
     <ClInclude Include="header\targetver.h" />
-    <ClInclude Include="header\TextureClass.h" />
     <ClInclude Include="header\TextureLoader.h" />
+    <ClInclude Include="header\TextureShaderClass.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -46,15 +46,6 @@
     <ClCompile Include="source\InputClass.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="source\LightClass.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="source\LightShaderClass.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="source\ModelClass.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="source\ModelLoader.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -64,10 +55,10 @@
     <ClCompile Include="source\SystemClass.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="source\TextureClass.cpp">
+    <ClCompile Include="source\TextureLoader.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="source\TextureLoader.cpp">
+    <ClCompile Include="source\TextureShaderClass.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -99,16 +90,7 @@
     <ClInclude Include="header\InputClass.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="header\LightClass.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="header\LightShaderClass.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="header\Mesh.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="header\ModelClass.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="header\ModelLoader.h">
@@ -126,10 +108,10 @@
     <ClInclude Include="header\targetver.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="header\TextureClass.h">
+    <ClInclude Include="header\TextureLoader.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="header\TextureLoader.h">
+    <ClInclude Include="header\TextureShaderClass.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

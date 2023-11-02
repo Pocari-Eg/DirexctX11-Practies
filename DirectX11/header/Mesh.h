@@ -60,6 +60,8 @@ public:
 		VertexBuffer->Release();
 		IndexBuffer->Release();
 	}
+
+	
 private:
 	/*  Render data  */
 	ID3D11Buffer *VertexBuffer, *IndexBuffer;

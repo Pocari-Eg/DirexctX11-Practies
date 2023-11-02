@@ -69,6 +69,8 @@ Mesh ModelLoader::processMesh(aiMesh * mesh, const aiScene * scene)
 			vertex.texcoord.y = (float)mesh->mTextureCoords[0][i].y;
 		}
 
+		
+
 		vertices.push_back(vertex);
 	}
 
