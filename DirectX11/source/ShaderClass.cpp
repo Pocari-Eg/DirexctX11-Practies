@@ -1,37 +1,37 @@
 #include "stdafx.h"
-#include "Textureshaderclass.h"
+#include "Shaderclass.h"
 
 
-TextureShaderClass::TextureShaderClass()
+Shaderclass::Shaderclass()
 {
 }
 
 
-TextureShaderClass::TextureShaderClass(const TextureShaderClass& other)
+Shaderclass::Shaderclass(const Shaderclass& other)
 {
 }
 
 
-TextureShaderClass::~TextureShaderClass()
+Shaderclass::~Shaderclass()
 {
 }
 
 
-bool TextureShaderClass::Initialize(ID3D11Device* device, HWND hwnd)
+bool Shaderclass::Initialize(ID3D11Device* device, HWND hwnd)
 {
 	// 정점 및 픽셀 쉐이더를 초기화합니다.
 	return InitializeShader(device, hwnd, L"../DirectX11/texture.vs", L"../DirectX11/texture.ps");
 }
 
 
-void TextureShaderClass::Shutdown()
+void Shaderclass::Shutdown()
 {
 	// 버텍스 및 픽셀 쉐이더와 관련된 객체를 종료합니다.
 	ShutdownShader();
 }
 
 
-bool TextureShaderClass::Render(ID3D11DeviceContext* deviceContext, XMMATRIX worldMatrix, XMMATRIX viewMatrix,
+bool Shaderclass::Render(ID3D11DeviceContext* deviceContext, XMMATRIX worldMatrix, XMMATRIX viewMatrix,
 	XMMATRIX projectionMatrix)
 {
 	// 렌더링에 사용할 셰이더 매개 변수를 설정합니다.
@@ -44,7 +44,7 @@ bool TextureShaderClass::Render(ID3D11DeviceContext* deviceContext, XMMATRIX wor
 }
 
 
-bool TextureShaderClass::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* vsFilename, WCHAR* psFilename)
+bool Shaderclass::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* vsFilename, WCHAR* psFilename)
 {
 	HRESULT result;
 	ID3D10Blob* errorMessage = nullptr;
@@ -181,7 +181,7 @@ bool TextureShaderClass::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR
 }
 
 
-void TextureShaderClass::ShutdownShader()
+void Shaderclass::ShutdownShader()
 {
 	// 샘플러 상태를 해제한다.
 	if (m_sampleState)
@@ -220,7 +220,7 @@ void TextureShaderClass::ShutdownShader()
 }
 
 
-void TextureShaderClass::OutputShaderErrorMessage(ID3D10Blob* errorMessage, HWND hwnd, WCHAR* shaderFilename)
+void Shaderclass::OutputShaderErrorMessage(ID3D10Blob* errorMessage, HWND hwnd, WCHAR* shaderFilename)
 {
 	// 에러 메시지를 출력창에 표시합니다.
 	OutputDebugStringA(reinterpret_cast<const char*>(errorMessage->GetBufferPointer()));
@@ -234,7 +234,7 @@ void TextureShaderClass::OutputShaderErrorMessage(ID3D10Blob* errorMessage, HWND
 }
 
 
-bool TextureShaderClass::SetShaderParameters(ID3D11DeviceContext* deviceContext, XMMATRIX worldMatrix, XMMATRIX viewMatrix,
+bool Shaderclass::SetShaderParameters(ID3D11DeviceContext* deviceContext, XMMATRIX worldMatrix, XMMATRIX viewMatrix,
 	XMMATRIX projectionMatrix)
 {
 	// 행렬을 transpose하여 셰이더에서 사용할 수 있게 합니다
@@ -271,7 +271,7 @@ bool TextureShaderClass::SetShaderParameters(ID3D11DeviceContext* deviceContext,
 }
 
 
-void TextureShaderClass::RenderShader(ID3D11DeviceContext* deviceContext)
+void Shaderclass::RenderShader(ID3D11DeviceContext* deviceContext)
 {
 	// 정점 입력 레이아웃을 설정합니다.
 	deviceContext->IASetInputLayout(m_layout);

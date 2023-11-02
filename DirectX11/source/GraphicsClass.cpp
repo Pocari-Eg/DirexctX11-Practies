@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "d3dclass.h"
 #include "cameraclass.h"
-#include "Textureshaderclass.h"
+#include "Shaderclass.h"
 #include "ModelLoader.h"
 #include "graphicsclass.h"
 
@@ -55,15 +55,15 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 			return false;
 	}
 
-	// m_TextureShader 객체 생성
-	m_TextureShader = new TextureShaderClass;
-	if (!m_TextureShader)
+	// m_Shader 객체 생성
+	m_Shader = new Shaderclass;
+	if (!m_Shader)
 	{
 		return false;
 	}
 
-	// m_TextureShader 객체 초기화
-	if (!m_TextureShader->Initialize(m_Direct3D->GetDevice(), hwnd))
+	// m_Shader 객체 초기화
+	if (!m_Shader->Initialize(m_Direct3D->GetDevice(), hwnd))
 	{
 		MessageBox(hwnd, L"Could not initialize the light shader object.", L"Error", MB_OK);
 		return false;
@@ -77,12 +77,12 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 void GraphicsClass::Shutdown()
 {
 
-	// m_TextureShader 객체 반환
-	if (m_TextureShader)
+	// m_Shader 객체 반환
+	if (m_Shader)
 	{
-		m_TextureShader->Shutdown();
-		delete m_TextureShader;
-		m_TextureShader = 0;
+		m_Shader->Shutdown();
+		delete m_Shader;
+		m_Shader = 0;
 	}
 
 
@@ -136,14 +136,9 @@ bool GraphicsClass::Render(float rotation)
 	// 삼각형이 회전 할 수 있도록 회전 값으로 월드 행렬을 회전합니다.
 	worldMatrix = XMMatrixRotationY(rotation);
 
-	// 모델 버텍스와 인덱스 버퍼를 그래픽 파이프 라인에 배치하여 드로잉을 준비합니다.
 
-
-
-	//m_Model->Render(m_Direct3D->GetDeviceContext());
-
-	// Light 쉐이더를 사용하여 모델을 렌더링합니다.
-	if (!m_TextureShader->Render(m_Direct3D->GetDeviceContext(), worldMatrix, viewMatrix, projectionMatrix))
+	//쉐이더를 사용하여 모델을 렌더링합니다.
+	if (!m_Shader->Render(m_Direct3D->GetDeviceContext(), worldMatrix, viewMatrix, projectionMatrix))
 	{
 		return false;
 	}

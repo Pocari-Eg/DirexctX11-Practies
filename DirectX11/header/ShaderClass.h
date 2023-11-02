@@ -1,6 +1,6 @@
 #pragma once
 
-class TextureShaderClass : public AlignedAllocationPolicy<16>
+class Shaderclass : public AlignedAllocationPolicy<16>
 {
 private:
 	struct MatrixBufferType
@@ -11,9 +11,9 @@ private:
 	};
 
 public:
-	TextureShaderClass();
-	TextureShaderClass(const TextureShaderClass&);
-	~TextureShaderClass();
+	Shaderclass();
+	Shaderclass(const Shaderclass&);
+	~Shaderclass();
 
 	bool Initialize(ID3D11Device*, HWND);
 	void Shutdown();

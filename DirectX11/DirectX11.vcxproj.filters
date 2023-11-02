@@ -58,7 +58,7 @@
     <ClCompile Include="source\TextureLoader.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="source\TextureShaderClass.cpp">
+    <ClCompile Include="source\ShaderClass.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -111,7 +111,7 @@
     <ClInclude Include="header\TextureLoader.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="header\TextureShaderClass.h">
+    <ClInclude Include="header\ShaderClass.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

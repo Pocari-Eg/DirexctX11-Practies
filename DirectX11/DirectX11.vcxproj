@@ -156,10 +156,10 @@
     <ClCompile Include="source\GraphicsClass.cpp" />
     <ClCompile Include="source\InputClass.cpp" />
     <ClCompile Include="source\ModelLoader.cpp" />
+    <ClCompile Include="source\ShaderClass.cpp" />
     <ClCompile Include="source\stdafx.cpp" />
     <ClCompile Include="source\SystemClass.cpp" />
     <ClCompile Include="source\TextureLoader.cpp" />
-    <ClCompile Include="source\TextureShaderClass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header\AlignedAllocationPolicy.h" />
@@ -174,11 +174,11 @@
     <ClInclude Include="header\Mesh.h" />
     <ClInclude Include="header\ModelLoader.h" />
     <ClInclude Include="header\Resource.h" />
+    <ClInclude Include="header\ShaderClass.h" />
     <ClInclude Include="header\stdafx.h" />
     <ClInclude Include="header\SystemClass.h" />
     <ClInclude Include="header\targetver.h" />
     <ClInclude Include="header\TextureLoader.h" />
-    <ClInclude Include="header\TextureShaderClass.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
