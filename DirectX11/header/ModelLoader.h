@@ -14,6 +14,8 @@
 
 using namespace DirectX;
 
+
+
 class ModelLoader
 {
 public:
@@ -21,9 +23,12 @@ public:
 	~ModelLoader();
 
 	bool Load(HWND hwnd, ID3D11Device* dev, ID3D11DeviceContext* devcon, std::string filename);
-	void Draw(ID3D11DeviceContext* devcon);
+	void Draw(ID3D11DeviceContext* devcon,int Num);
 
 	void Close();
+
+	aiMatrix4x4 GetTranslation(int n) { return TransformData[n]; }
+	int GetMeshCount() { return MeshCount; }
 private:
 	ID3D11Device *dev;
 	ID3D11DeviceContext *devcon;
@@ -31,13 +36,19 @@ private:
 	string directory;
 	vector<Texture> textures_loaded;
 	HWND hwnd;
+	vector<aiMatrix4x4> TransformData;
+
+	int MeshCount;
+
 
 	void processNode(aiNode* node, const aiScene* scene);
 	Mesh processMesh(aiMesh* mesh, const aiScene* scene);
 	vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName, const aiScene* scene);
 	string determineTextureType(const aiScene* scene, aiMaterial* mat);
 	int getTextureIndex(aiString* str);
+	
 	ID3D11ShaderResourceView* getTextureFromModel(const aiScene* scene, int textureindex);
+
 };
 
 #endif // !MODEL_LOADER_H

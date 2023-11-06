@@ -3,6 +3,7 @@
 #include "cameraclass.h"
 #include "Shaderclass.h"
 #include "ModelLoader.h"
+#include "Object.h"
 #include "graphicsclass.h"
 
 
@@ -36,6 +37,8 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		MessageBox(hwnd, L"Could not initialize Direct3D.", L"Error", MB_OK);
 		return false;
 	}
+	
+	
 
 	// m_Camera 객체 생성
 	m_Camera = new CameraClass;
@@ -45,11 +48,11 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	}
 
 	// 카메라 포지션 설정
-	m_Camera->SetPosition(0.0f, 200.0f,-200.0f);
-	m_Camera->SetRotation(45.0f, 0.0f, 0.0f);
+	m_Camera->SetPosition(0.0f, 0.0f,-5.0f);
+	m_Camera->SetRotation(0, 0.0f, 0.0f);
 	
 	m_ModelLoader = new ModelLoader;
-	if(!m_ModelLoader->Load(hwnd, m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), "../DirectX11/models/spider.obj"))
+	if(!m_ModelLoader->Load(hwnd, m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), "../DirectX11/models/cubes_with_names.fbx"))
 	{
 		 MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
 			return false;
@@ -69,6 +72,16 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		return false;
 	}
 
+	m_Object = new Object;
+	if(!m_Object)
+	{
+		return false;
+	}
+	if (!m_Object->Initialize(m_ModelLoader, m_Shader))
+	{
+		MessageBox(hwnd, L"Could not initialize the Main object.", L"Error", MB_OK);
+		return false;
+	}
 
 	return true;
 }
@@ -93,6 +106,11 @@ void GraphicsClass::Shutdown()
 		m_Camera = 0;
 	}
 
+	if (m_Object)
+	{
+		delete m_Object;
+		m_Object = 0;
+	}
 	// Direct3D 객체 반환
 	if (m_Direct3D)
 	{
@@ -100,6 +118,8 @@ void GraphicsClass::Shutdown()
 		delete m_Direct3D;
 		m_Direct3D = 0;
 	}
+
+	
 }
 
 
@@ -118,6 +138,24 @@ bool GraphicsClass::Frame()
 	return Render(rotation);
 }
 
+bool GraphicsClass::WindowResize(int width, int height,HWND hwnd)
+{
+
+	// Direct3D 객체 초기화
+	if (m_Direct3D->ReSize(width, height, VSYNC_ENABLED, hwnd, FULL_SCREEN, SCREEN_DEPTH, SCREEN_NEAR))
+	{
+
+	/*	int NewZ = width/100;
+		NewZ *= 625;
+		NewZ /= 1000;
+		NewZ *= -1;
+		m_Camera->SetPosition(0.0f, 0.0f, (float)NewZ);*/
+		return true;
+	}
+	
+	return false;
+}
+
 
 bool GraphicsClass::Render(float rotation)
 {
@@ -134,16 +172,10 @@ bool GraphicsClass::Render(float rotation)
 	m_Direct3D->GetProjectionMatrix(projectionMatrix);
 
 	// 삼각형이 회전 할 수 있도록 회전 값으로 월드 행렬을 회전합니다.
-	worldMatrix = XMMatrixRotationY(rotation);
+	//
 
+	m_Object->Draw(m_Direct3D->GetDeviceContext(), worldMatrix, viewMatrix, projectionMatrix, rotation);
 
-	//쉐이더를 사용하여 모델을 렌더링합니다.
-	if (!m_Shader->Render(m_Direct3D->GetDeviceContext(), worldMatrix, viewMatrix, projectionMatrix))
-	{
-		return false;
-	}
-
-	m_ModelLoader->Draw(m_Direct3D->GetDeviceContext());
 	// 버퍼의 내용을 화면에 출력합니다
 	m_Direct3D->EndScene();
 

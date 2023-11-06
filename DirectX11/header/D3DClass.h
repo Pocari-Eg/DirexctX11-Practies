@@ -22,6 +22,8 @@ public:
 
 	void GetVideoCardInfo(char*, int&);
 
+	bool ReSize(int, int, bool, HWND, bool, float, float);
+
 private:
 	bool m_vsync_enabled = false;
 	int m_videoCardMemory = 0;

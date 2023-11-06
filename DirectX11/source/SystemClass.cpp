@@ -108,7 +108,7 @@ bool SystemClass::Frame()
 	{
 		return false;
 	}
-
+	
 	// 그래픽 객체의 Frame을 처리합니다
 	return m_Graphics->Frame();
 }
@@ -133,6 +133,7 @@ LRESULT CALLBACK SystemClass::MessageHandler(HWND hwnd, UINT umsg, WPARAM wparam
 		m_Input->KeyUp((unsigned int)wparam);
 		return 0;
 	}
+
 
 	// 그 외의 모든 메시지들은 기본 메시지 처리로 넘깁니다.
 	default:
@@ -165,7 +166,7 @@ void SystemClass::InitializeWindows(int& screenWidth, int& screenHeight)
 	wc.hIconSm = wc.hIcon;
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
-	wc.lpszMenuName = NULL;
+	wc.lpszMenuName = L"DirecX11";
 	wc.lpszClassName = m_applicationName;
 	wc.cbSize = sizeof(WNDCLASSEX);
 
@@ -197,8 +198,8 @@ void SystemClass::InitializeWindows(int& screenWidth, int& screenHeight)
 	else
 	{
 		// 윈도우 모드의 경우 800 * 600 크기를 지정합니다.
-		screenWidth = 800;
-		screenHeight = 600;
+		screenWidth = 1280;
+		screenHeight = 720;
 
 		// 윈도우 창을 가로, 세로의 정 가운데 오도록 합니다.
 		posX = (GetSystemMetrics(SM_CXSCREEN) - screenWidth) / 2;
@@ -207,13 +208,14 @@ void SystemClass::InitializeWindows(int& screenWidth, int& screenHeight)
 
 	// 윈도우를 생성하고 핸들을 구합니다.
 	m_hwnd = CreateWindowEx(WS_EX_APPWINDOW, m_applicationName, m_applicationName,
-		WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_POPUP,
+		WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_POPUP| WS_SYSMENU | WS_CAPTION | WS_MAXIMIZEBOX | WS_MINIMIZEBOX,
 		posX, posY, screenWidth, screenHeight, NULL, NULL, m_hinstance, NULL);
 
 	// 윈도우를 화면에 표시하고 포커스를 지정합니다
 	ShowWindow(m_hwnd, SW_SHOW);
 	SetForegroundWindow(m_hwnd);
 	SetFocus(m_hwnd);
+	InitWinodw = true;
 }
 
 
@@ -238,8 +240,12 @@ void SystemClass::ShutdownWindows()
 }
 
 
+
+
+
 LRESULT CALLBACK WndProc(HWND hwnd, UINT umessage, WPARAM wparam, LPARAM lparam)
 {
+
 	switch (umessage)
 	{
 		// 윈도우 종료를 확인합니다
@@ -256,6 +262,19 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT umessage, WPARAM wparam, LPARAM lparam)
 		return 0;
 	}
 
+	case WM_SIZE:
+	{
+
+		if (InitWinodw) {
+			RECT rc{};
+			GetWindowRect(hwnd, &rc);
+
+			int w = static_cast<UINT>(rc.right - rc.left);
+			int h = static_cast<UINT>(rc.bottom - rc.top);
+			m_Graphics->WindowResize(w, h,hwnd);
+		}
+		break;
+	}
 	// 그 외의 모든 메시지들은 시스템 클래스의 메시지 처리로 넘깁니다.
 	default:
 	{

@@ -23,14 +23,19 @@ private:
 	void InitializeWindows(int&, int&);
 	void ShutdownWindows();
 
+
+
 private:
 	LPCWSTR m_applicationName;
 	HINSTANCE m_hinstance;
 	HWND m_hwnd;
 
 	InputClass* m_Input = nullptr;
-	GraphicsClass* m_Graphics = nullptr;
-};
 
+
+
+};
+static bool InitWinodw = false;
+static GraphicsClass* m_Graphics = nullptr;
 static LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 static SystemClass* ApplicationHandle = 0;

@@ -3,12 +3,8 @@
 class Shaderclass : public AlignedAllocationPolicy<16>
 {
 private:
-	struct MatrixBufferType
-	{
-		XMMATRIX world;
-		XMMATRIX view;
-		XMMATRIX projection;
-	};
+
+
 
 public:
 	Shaderclass();
