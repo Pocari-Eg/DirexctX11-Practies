@@ -155,6 +155,7 @@
     <ClCompile Include="source\DirectX11.cpp" />
     <ClCompile Include="source\GraphicsClass.cpp" />
     <ClCompile Include="source\InputClass.cpp" />
+    <ClCompile Include="source\LightClass.cpp" />
     <ClCompile Include="source\ModelLoader.cpp" />
     <ClCompile Include="source\ShaderClass.cpp" />
     <ClCompile Include="source\stdafx.cpp" />
@@ -171,15 +172,16 @@
     <ClInclude Include="header\framework.h" />
     <ClInclude Include="header\GraphicsClass.h" />
     <ClInclude Include="header\InputClass.h" />
+    <ClInclude Include="header\LightClass.h" />
     <ClInclude Include="header\Mesh.h" />
     <ClInclude Include="header\ModelLoader.h" />
+    <ClInclude Include="header\Object.h" />
     <ClInclude Include="header\Resource.h" />
     <ClInclude Include="header\ShaderClass.h" />
     <ClInclude Include="header\stdafx.h" />
     <ClInclude Include="header\SystemClass.h" />
     <ClInclude Include="header\targetver.h" />
     <ClInclude Include="header\TextureLoader.h" />
-    <ClInclude Include="Object.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -725,7 +725,6 @@ bool D3DClass::ReSize(int screenWidth, int screenHeight, bool vsync, HWND hwnd, 
 
 	// 세계 행렬을 항등 행렬로 초기화합니다
 	m_worldMatrix = XMMatrixIdentity();
-
 	// 2D 렌더링을위한 직교 투영 행렬을 만듭니다
 	m_orthoMatrix = XMMatrixOrthographicLH((float)screenWidth, (float)screenHeight, screenNear, screenDepth);
 #pragma endregion Init

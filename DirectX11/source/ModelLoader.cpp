@@ -17,7 +17,7 @@ bool ModelLoader::Load(HWND hwnd, ID3D11Device * dev, ID3D11DeviceContext * devc
 
 	const aiScene* pScene = importer.ReadFile(filename,
 		aiProcess_Triangulate |
-		aiProcess_ConvertToLeftHanded);
+		aiProcess_ConvertToLeftHanded| aiProcess_GenSmoothNormals| aiProcess_GenUVCoords);
 
 	if (pScene == NULL)
 		return false;
@@ -69,11 +69,15 @@ Mesh ModelLoader::processMesh(aiMesh * mesh, const aiScene * scene)
 		vertex.Y = mesh->mVertices[i].y;
 		vertex.Z = mesh->mVertices[i].z;
 
+		vertex.Nx = mesh->mNormals[i].x;
+		vertex.Ny = mesh->mNormals[i].y;
+		vertex.Nz = mesh->mNormals[i].z;
 		if (mesh->mTextureCoords[0])
 		{
 			vertex.texcoord.x = (float)mesh->mTextureCoords[0][i].x;
 			vertex.texcoord.y = (float)mesh->mTextureCoords[0][i].y;
 		}
+	
 
 		
 
@@ -138,7 +142,8 @@ vector<Texture> ModelLoader::loadMaterialTextures(aiMaterial * mat, aiTextureTyp
 					hr = CreateWICTextureFromFile(dev, devcon, filenamews.c_str(), nullptr, &texture.texture);
 					if (FAILED(hr))
 					{
-						str = "White.jpg";
+						str = "2813111.jpg";
+						//str = "White.jpg";
 						string filename = string(str.C_Str());
 						filename = directory + '/' + filename;
 						wstring filenamews = wstring(filename.begin(), filename.end());
@@ -159,7 +164,8 @@ vector<Texture> ModelLoader::loadMaterialTextures(aiMaterial * mat, aiTextureTyp
 		HRESULT hr;
 		Texture texture;
 		    aiString str;
-			str = "drkwood2.jpg";
+			str = "2813111.jpg";
+			//str = "White.jpg";
 			string filename = string(str.C_Str());
 			filename = directory + '/' + filename;
 			wstring filenamews = wstring(filename.begin(), filename.end());

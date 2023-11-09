@@ -5,7 +5,7 @@
 #include "ModelLoader.h"
 #include "Object.h"
 #include "graphicsclass.h"
-
+#include "LightClass.h"
 
 GraphicsClass::GraphicsClass()
 {
@@ -48,11 +48,10 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	}
 
 	// 카메라 포지션 설정
-	m_Camera->SetPosition(0.0f, 0.0f,-5.0f);
-	m_Camera->SetRotation(0, 0.0f, 0.0f);
+	m_Camera->SetPosition(0.0f, 0.0f,-6.0f);
 	
 	m_ModelLoader = new ModelLoader;
-	if(!m_ModelLoader->Load(hwnd, m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), "../DirectX11/models/cubes_with_names.fbx"))
+	if(!m_ModelLoader->Load(hwnd, m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), "../DirectX11/models/sphere.dae"))
 	{
 		 MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
 			return false;
@@ -83,12 +82,30 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		return false;
 	}
 
+	m_Light = new LightClass;
+	if (!m_Light)
+	{
+		return false;
+	}
+	m_Light->SetAmbientColor(0.15f, 0.15f, 0.15f, 1.0f);
+	m_Light->SetDiffuseColor(0.9f, 0.9f, 0.9f, 0.9f);
+	m_Light->SetDirection(1.0f, 0.0f, 1.0f);
+	m_Light->SetSpecularColor(1.0f, 1.0f, 1.0f, 1.0f);
+	m_Light->SetSpecularPower(32.0f);
+
 	return true;
 }
 
 
 void GraphicsClass::Shutdown()
 {
+
+
+	if (m_Light)
+	{
+		delete m_Light;
+		m_Light = 0;
+	}
 
 	// m_Shader 객체 반환
 	if (m_Shader)
@@ -128,7 +145,7 @@ bool GraphicsClass::Frame()
 	static float rotation = 0.0f;
 
 	// 각 프레임의 rotation 변수를 업데이트합니다.
-	rotation += (float)XM_PI * 0.01f;
+	rotation += (float)XM_PI * 0.002f;
 	if(rotation > 360.0f)
 	{
 		rotation -= 360.0f;
@@ -145,11 +162,6 @@ bool GraphicsClass::WindowResize(int width, int height,HWND hwnd)
 	if (m_Direct3D->ReSize(width, height, VSYNC_ENABLED, hwnd, FULL_SCREEN, SCREEN_DEPTH, SCREEN_NEAR))
 	{
 
-	/*	int NewZ = width/100;
-		NewZ *= 625;
-		NewZ /= 1000;
-		NewZ *= -1;
-		m_Camera->SetPosition(0.0f, 0.0f, (float)NewZ);*/
 		return true;
 	}
 	
@@ -172,9 +184,12 @@ bool GraphicsClass::Render(float rotation)
 	m_Direct3D->GetProjectionMatrix(projectionMatrix);
 
 	// 삼각형이 회전 할 수 있도록 회전 값으로 월드 행렬을 회전합니다.
-	//
+	
+   worldMatrix = XMMatrixRotationY(rotation);
 
-	m_Object->Draw(m_Direct3D->GetDeviceContext(), worldMatrix, viewMatrix, projectionMatrix, rotation);
+	m_Object->Draw(m_Direct3D->GetDeviceContext(), worldMatrix, viewMatrix, projectionMatrix,
+		rotation, m_Light->GetDirection(), m_Light->GetDffiuseColor(), m_Light->GetAmbientColor(),
+		m_Camera->GetPosition(), m_Light->GetSpecularColor(),m_Light->GetSpecularPower());
 
 	// 버퍼의 내용을 화면에 출력합니다
 	m_Direct3D->EndScene();

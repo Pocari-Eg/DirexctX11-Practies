@@ -61,6 +61,9 @@
     <ClCompile Include="source\ShaderClass.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="source\LightClass.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header\AlignedAllocationPolicy.h">
@@ -114,7 +117,10 @@
     <ClInclude Include="header\ShaderClass.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Object.h">
+    <ClInclude Include="header\LightClass.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="header\Object.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

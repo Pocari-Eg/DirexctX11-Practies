@@ -34,10 +34,12 @@ public:
 		return true;
 	}
 	bool Draw(ID3D11DeviceContext* deviceContext, XMMATRIX worldMatrix, XMMATRIX viewMatrix,
-		XMMATRIX projectionMatrix,float r)
+		XMMATRIX projectionMatrix,float r,XMFLOAT3 lightDirection,XMFLOAT4 diffuseColor, XMFLOAT4 ambientColor,
+		XMFLOAT3 CameraPos,XMFLOAT4 specularColor,float specularPower)
 	{
 
-		if (!m_Shader->Render(deviceContext, worldMatrix, viewMatrix, projectionMatrix))
+		if (!m_Shader->Render(deviceContext, worldMatrix, viewMatrix, projectionMatrix,lightDirection,diffuseColor, ambientColor,
+			CameraPos,specularColor,specularPower))
 		{
 			return false;
 		}
@@ -46,7 +48,7 @@ public:
 		for (int i = 0; i < m_Model->GetMeshCount(); i++) {
 
 
-			m_Model->Draw(deviceContext,i);
+ 			m_Model->Draw(deviceContext,i);
 		}
 
 	}

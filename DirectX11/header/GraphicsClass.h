@@ -15,6 +15,8 @@ class Shaderclass;
 class ModelLoader;
 class Object;
 
+class LightClass;
+
 class GraphicsClass
 {
 public:
@@ -37,5 +39,7 @@ private:
 	ModelLoader* m_ModelLoader = nullptr;
 	Shaderclass* m_Shader = nullptr;
 	Object* m_Object = nullptr;
+
+	LightClass* m_Light = nullptr;
 
 };

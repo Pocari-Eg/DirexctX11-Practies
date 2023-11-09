@@ -16,6 +16,7 @@ using namespace DirectX;
 struct VERTEX {
 	FLOAT X, Y, Z;
 	XMFLOAT2 texcoord;
+	FLOAT Nx, Ny, Nz;
 };
 
 struct Texture {
@@ -46,11 +47,11 @@ public:
 	{
 		UINT stride = sizeof(VERTEX);
 		UINT offset = 0;
+		devcon->PSSetShaderResources(0, 1, &textures[0].texture);
 
 		devcon->IASetVertexBuffers(0, 1, &VertexBuffer, &stride, &offset);
 		devcon->IASetIndexBuffer(IndexBuffer, DXGI_FORMAT_R32_UINT, 0);
 
-		devcon->PSSetShaderResources(0, 1, &textures[0].texture);
 
 		devcon->DrawIndexed(indices.size(), 0, 0);
 	}
@@ -78,9 +79,15 @@ private:
 		vbd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 		vbd.CPUAccessFlags = 0;
 		vbd.MiscFlags = 0;
+		vbd.StructureByteStride = 0;
+
+	
 
 		D3D11_SUBRESOURCE_DATA initData;
 		initData.pSysMem = &vertices[0];
+		initData.SysMemPitch = 0;
+		initData.SysMemSlicePitch = 0;
+
 
 		hr = dev->CreateBuffer(&vbd, &initData, &VertexBuffer);
 		if (FAILED(hr))
@@ -94,10 +101,14 @@ private:
 		ibd.MiscFlags = 0;
 
 		initData.pSysMem = &indices[0];
+		initData.SysMemPitch = 0;
+		initData.SysMemSlicePitch = 0;
+
 
 		hr = dev->CreateBuffer(&ibd, &initData, &IndexBuffer);
 		if (FAILED(hr))
 			return false;
+
 	}
 };
 
