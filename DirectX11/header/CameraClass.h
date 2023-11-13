@@ -16,8 +16,11 @@ public:
 	void Render();
 	void GetViewMatrix(XMMATRIX&);
 
+	const XMFLOAT3 GetCameraFoward();
+
 private:
 	XMFLOAT3 m_position;
 	XMFLOAT3 m_rotation;
 	XMMATRIX m_viewMatrix;
+	XMVECTOR m_lookAtVector;
 };

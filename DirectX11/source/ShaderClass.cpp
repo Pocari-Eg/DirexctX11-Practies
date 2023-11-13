@@ -32,12 +32,10 @@ void Shaderclass::Shutdown()
 
 
 bool Shaderclass::Render(ID3D11DeviceContext* deviceContext, XMMATRIX worldMatrix, XMMATRIX viewMatrix,
-	XMMATRIX projectionMatrix,XMFLOAT3 lightDirection,XMFLOAT4 diffuseColor, XMFLOAT4 ambientColor
-, XMFLOAT3 CameraPos, XMFLOAT4 specularColor, float specularPower)
+	XMMATRIX projectionMatrix,LightData lightData)
 {
 	// 렌더링에 사용할 셰이더 매개 변수를 설정합니다.
-	if (!SetShaderParameters(deviceContext, worldMatrix, viewMatrix, projectionMatrix, lightDirection, diffuseColor, ambientColor
-	, CameraPos, specularColor,specularPower))
+	if (!SetShaderParameters(deviceContext, worldMatrix, viewMatrix, projectionMatrix, lightData))
 	{
 		return false;
 	}
@@ -284,8 +282,7 @@ void Shaderclass::OutputShaderErrorMessage(ID3D10Blob* errorMessage, HWND hwnd, 
 
 
 bool Shaderclass::SetShaderParameters(ID3D11DeviceContext* deviceContext, XMMATRIX worldMatrix, XMMATRIX viewMatrix,
-	XMMATRIX projectionMatrix, XMFLOAT3 lightDirection, XMFLOAT4 DiffuseColor, XMFLOAT4 ambientColor
-	, XMFLOAT3 CameraPos, XMFLOAT4 specularColor, float specularPower)
+	XMMATRIX projectionMatrix, LightData lightData)
 {
 	// 행렬을 transpose하여 셰이더에서 사용할 수 있게 합니다
 	worldMatrix = XMMatrixTranspose(worldMatrix);
@@ -327,7 +324,7 @@ bool Shaderclass::SetShaderParameters(ID3D11DeviceContext* deviceContext, XMMATR
 	CameraBufferType* dataPtr3 = (CameraBufferType*)mappedResource.pData;
 
 
-	dataPtr3->cameraPosition = CameraPos;
+	dataPtr3->cameraPosition = lightData.CameraPos;
 	dataPtr3->padding = 0.0f;
 
 	deviceContext->Unmap(m_cameraBuffer, 0);
@@ -345,11 +342,11 @@ bool Shaderclass::SetShaderParameters(ID3D11DeviceContext* deviceContext, XMMATR
 	}
 	LightBufferType* dataPtr2 = (LightBufferType*)mappedResource.pData;
 
-	dataPtr2->ambientColor = ambientColor;
-	dataPtr2->diffuseColor = DiffuseColor;
-	dataPtr2->lightDirection = lightDirection;
-	dataPtr2->specularColor = specularColor;
-	dataPtr2->specularPower = specularPower;
+	dataPtr2->ambientColor = lightData.ambientColor;
+	dataPtr2->diffuseColor = lightData.diffuseColor;
+	dataPtr2->lightDirection = lightData.lightDirection;
+	dataPtr2->specularColor = lightData.specularColor;
+	dataPtr2->specularPower = lightData.specularPower;
 
 	deviceContext->Unmap(m_lightBuffer, 0);
 	bufferNumber = 0;

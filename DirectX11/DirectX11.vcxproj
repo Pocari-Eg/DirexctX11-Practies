@@ -149,10 +149,13 @@
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BitmapClass.cpp" />
     <ClCompile Include="source\CameraClass.cpp" />
     <ClCompile Include="source\D3DClass.cpp" />
     <ClCompile Include="source\DDSTextureLoader.cpp" />
     <ClCompile Include="source\DirectX11.cpp" />
+    <ClCompile Include="source\FontClass.cpp" />
+    <ClCompile Include="source\FontShaderClass.cpp" />
     <ClCompile Include="source\GraphicsClass.cpp" />
     <ClCompile Include="source\InputClass.cpp" />
     <ClCompile Include="source\LightClass.cpp" />
@@ -160,9 +163,12 @@
     <ClCompile Include="source\ShaderClass.cpp" />
     <ClCompile Include="source\stdafx.cpp" />
     <ClCompile Include="source\SystemClass.cpp" />
+    <ClCompile Include="source\TextClass.cpp" />
+    <ClCompile Include="source\TextureClass.cpp" />
     <ClCompile Include="source\TextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BitmapClass.h" />
     <ClInclude Include="header\AlignedAllocationPolicy.h" />
     <ClInclude Include="header\CameraClass.h" />
     <ClInclude Include="header\D3DClass.h" />
@@ -181,6 +187,7 @@
     <ClInclude Include="header\stdafx.h" />
     <ClInclude Include="header\SystemClass.h" />
     <ClInclude Include="header\targetver.h" />
+    <ClInclude Include="header\TextureClass.h" />
     <ClInclude Include="header\TextureLoader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

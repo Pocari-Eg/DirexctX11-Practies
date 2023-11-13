@@ -15,6 +15,7 @@ class Shaderclass;
 class ModelLoader;
 class Object;
 
+class TextClass;
 class LightClass;
 
 class GraphicsClass
@@ -26,12 +27,15 @@ public:
 
 	bool Initialize(int, int, HWND);
 	void Shutdown();
-	bool Frame();
-
+	bool Frame(int,int);
+	bool Render(float);
+	
 	bool WindowResize(int width, int height,HWND hwnd);
 
+	void MouseInput(DIMOUSESTATE mouseState);
 private:
-	bool Render(float);
+
+
 
 private:
 	D3DClass* m_Direct3D = nullptr;
@@ -41,5 +45,10 @@ private:
 	Object* m_Object = nullptr;
 
 	LightClass* m_Light = nullptr;
+
+	TextClass* m_Text = nullptr;
+
+
+	XMFLOAT3 DefaultCameraPos;
 
 };
