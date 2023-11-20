@@ -149,26 +149,30 @@
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BitmapClass.cpp" />
+    <ClCompile Include="include\imgui\FileBrowser\ImGuiFileBrowser.cpp" />
+    <ClCompile Include="include\imgui\imgui.cpp" />
+    <ClCompile Include="include\imgui\imgui_demo.cpp" />
+    <ClCompile Include="include\imgui\imgui_draw.cpp" />
+    <ClCompile Include="include\imgui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="include\imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="include\imgui\imgui_tables.cpp" />
+    <ClCompile Include="include\imgui\imgui_widgets.cpp" />
     <ClCompile Include="source\CameraClass.cpp" />
     <ClCompile Include="source\D3DClass.cpp" />
     <ClCompile Include="source\DDSTextureLoader.cpp" />
     <ClCompile Include="source\DirectX11.cpp" />
-    <ClCompile Include="source\FontClass.cpp" />
-    <ClCompile Include="source\FontShaderClass.cpp" />
     <ClCompile Include="source\GraphicsClass.cpp" />
+    <ClCompile Include="source\GUIClass.cpp" />
     <ClCompile Include="source\InputClass.cpp" />
     <ClCompile Include="source\LightClass.cpp" />
     <ClCompile Include="source\ModelLoader.cpp" />
     <ClCompile Include="source\ShaderClass.cpp" />
     <ClCompile Include="source\stdafx.cpp" />
     <ClCompile Include="source\SystemClass.cpp" />
-    <ClCompile Include="source\TextClass.cpp" />
     <ClCompile Include="source\TextureClass.cpp" />
     <ClCompile Include="source\TextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BitmapClass.h" />
     <ClInclude Include="header\AlignedAllocationPolicy.h" />
     <ClInclude Include="header\CameraClass.h" />
     <ClInclude Include="header\D3DClass.h" />
@@ -177,18 +181,29 @@
     <ClInclude Include="header\DxDefine.h" />
     <ClInclude Include="header\framework.h" />
     <ClInclude Include="header\GraphicsClass.h" />
+    <ClInclude Include="header\GUIClass.h" />
     <ClInclude Include="header\InputClass.h" />
     <ClInclude Include="header\LightClass.h" />
     <ClInclude Include="header\Mesh.h" />
     <ClInclude Include="header\ModelLoader.h" />
     <ClInclude Include="header\Object.h" />
-    <ClInclude Include="header\Resource.h" />
     <ClInclude Include="header\ShaderClass.h" />
     <ClInclude Include="header\stdafx.h" />
     <ClInclude Include="header\SystemClass.h" />
     <ClInclude Include="header\targetver.h" />
     <ClInclude Include="header\TextureClass.h" />
     <ClInclude Include="header\TextureLoader.h" />
+    <ClInclude Include="include\imgui\FileBrowser\Dirent\dirent.h" />
+    <ClInclude Include="include\imgui\FileBrowser\ImGuiFileBrowser.h" />
+    <ClInclude Include="include\imgui\imconfig.h" />
+    <ClInclude Include="include\imgui\imgui.h" />
+    <ClInclude Include="include\imgui\imgui_impl_dx11.h" />
+    <ClInclude Include="include\imgui\imgui_impl_win32.h" />
+    <ClInclude Include="include\imgui\imgui_internal.h" />
+    <ClInclude Include="include\imgui\imstb_rectpack.h" />
+    <ClInclude Include="include\imgui\imstb_textedit.h" />
+    <ClInclude Include="include\imgui\imstb_truetype.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -16,11 +16,16 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		return -1;
 	}
 
+
+
 	// System 객체 초기화 및 실행
 	if (System->Initialize())
 	{
 		System->Run();
 	}
+
+
+
 
 	// System 객체 종료 및 메모리 반환
 	System->Shutdown();

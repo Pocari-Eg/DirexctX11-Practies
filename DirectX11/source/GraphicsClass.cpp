@@ -6,7 +6,7 @@
 #include "Object.h"
 #include "graphicsclass.h"
 #include "LightClass.h"
-#include"TextClass.h"
+#include"GUIClass.h"
 
 GraphicsClass::GraphicsClass()
 {
@@ -32,6 +32,8 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		return false;
 	}
 
+
+
 	// Direct3D 객체 초기화
 	if(!m_Direct3D->Initialize(screenWidth, screenHeight, VSYNC_ENABLED, hwnd, FULL_SCREEN, SCREEN_DEPTH, SCREEN_NEAR))
 	{
@@ -39,7 +41,14 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		return false;
 	}
 	
-	
+	m_Gui = new GUIClass;
+	if (!m_Gui)
+	{
+		return false;
+	}
+
+	m_Gui->Initialize(hwnd, m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(),m_Direct3D->GetRenderTargetView());
+
 
 	// m_Camera 객체 생성
 	m_Camera = new CameraClass;
@@ -47,6 +56,7 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	{
 		return false;
 	}
+
 
 
 
@@ -95,11 +105,7 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	m_Light->SetSpecularColor(1.0f, 1.0f, 1.0f, 1.0f);
 	m_Light->SetSpecularPower(32.0f);
 
-	m_Text = new TextClass;
-	if (!m_Text)
-	{
-		return false;
-	}
+
 
 
 	// 카메라 포지션 설정
@@ -109,10 +115,8 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	m_Camera->Render();
 	XMMATRIX BaseViewMatrix;
 	m_Camera->GetViewMatrix(BaseViewMatrix);
-	if(!m_Text->Initialize(m_Direct3D->GetDevice(),m_Direct3D->GetDeviceContext(),hwnd,screenWidth,screenHeight, BaseViewMatrix)){
-	
-		return false;
-	}
+
+
 
 	return true;
 }
@@ -150,12 +154,14 @@ void GraphicsClass::Shutdown()
 		m_Object = 0;
 	}
 
-	if (m_Text)
+
+	if (m_Gui)
 	{
-		m_Text->Shutdown();
-		delete m_Text;
-		m_Text = 0;
+		m_Gui->Shutdown();
+		delete m_Gui;
+		m_Gui = 0;
 	}
+
 	// Direct3D 객체 반환
 	if (m_Direct3D)
 	{
@@ -180,10 +186,6 @@ bool GraphicsClass::Frame(int mouseX,int mouseY)
 		rotation -= 360.0f;
 	}
 	
-	if (!m_Text->SetMousePosition(mouseX, mouseY, m_Direct3D->GetDeviceContext()))
-	{
-		return false;
-	}
 
 	// 그래픽 랜더링 처리
 
@@ -239,8 +241,9 @@ void GraphicsClass::MouseInput(DIMOUSESTATE mouseState)
 
 bool GraphicsClass::Render(float rotation)
 {
+
 	// 씬을 그리기 위해 버퍼를 지웁니다
-	m_Direct3D->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
+	m_Direct3D->BeginScene(0.45f, 0.55f, 0.60f, 1.0f);
 
 	// 카메라의 위치에 따라 뷰 행렬을 생성합니다
 	m_Camera->Render();
@@ -253,26 +256,22 @@ bool GraphicsClass::Render(float rotation)
 	m_Direct3D->GetOrthoMatrix(orthoMatrix);
 	// 삼각형이 회전 할 수 있도록 회전 값으로 월드 행렬을 회전합니다.
 	
-	m_Direct3D->TurnZBufferOff();
-	m_Direct3D->TurnOnAlphaBlending();
 
 
-	if (!m_Text->Render(m_Direct3D->GetDeviceContext(), worldMatrix, orthoMatrix))
-	{
-		return false;
-	}
 
-	m_Direct3D->TurnOffAlphaBlending();
-	m_Direct3D->TurnZBufferOn();
+
 
    worldMatrix = XMMatrixRotationY(rotation);
 
    LightData m_LightData = { m_Light->GetDirection(), m_Light->GetDffiuseColor(), m_Light->GetAmbientColor(),
 		m_Camera->GetPosition(), m_Light->GetSpecularColor(),m_Light->GetSpecularPower() };
 
+  
+
+
 	m_Object->Draw(m_Direct3D->GetDeviceContext(), worldMatrix, viewMatrix, projectionMatrix, m_LightData);
 
-
+	m_Gui->Draw();
 	
 
 	// 버퍼의 내용을 화면에 출력합니다

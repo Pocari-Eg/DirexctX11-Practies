@@ -1,5 +1,6 @@
 #pragma once
 
+
 class D3DClass : public AlignedAllocationPolicy<16>
 {
 public:
@@ -15,6 +16,8 @@ public:
 
 	ID3D11Device* GetDevice();
 	ID3D11DeviceContext* GetDeviceContext();
+	ID3D11RenderTargetView* GetRenderTargetView();
+
 
 	void GetProjectionMatrix(XMMATRIX&);
 	void GetWorldMatrix(XMMATRIX&);
@@ -25,12 +28,6 @@ public:
 	bool ReSize(int, int, bool, HWND, bool, float, float);
 
 
-
-	void TurnZBufferOn();
-	void TurnZBufferOff();
-
-	void TurnOnAlphaBlending();
-	void TurnOffAlphaBlending();
 
 private:
 	bool m_vsync_enabled = false;
@@ -48,7 +45,6 @@ private:
 	XMMATRIX m_worldMatrix;
 	XMMATRIX m_orthoMatrix;
 
-	ID3D11DepthStencilState* m_depthDisabledStencilState = nullptr;
-	ID3D11BlendState* m_alphaEnableBlendingState = nullptr;
-	ID3D11BlendState* m_alphaDisableBlendingState = nullptr;
+
+	
 };

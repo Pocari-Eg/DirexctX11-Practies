@@ -15,8 +15,10 @@ class Shaderclass;
 class ModelLoader;
 class Object;
 
-class TextClass;
+
 class LightClass;
+
+class GUIClass;
 
 class GraphicsClass
 {
@@ -46,8 +48,8 @@ private:
 
 	LightClass* m_Light = nullptr;
 
-	TextClass* m_Text = nullptr;
 
+	GUIClass* m_Gui = nullptr;
 
 	XMFLOAT3 DefaultCameraPos;
 

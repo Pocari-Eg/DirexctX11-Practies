@@ -2,6 +2,8 @@
 #include "Inputclass.h"
 #include "graphicsclass.h"
 #include "systemclass.h"
+#include "GUIClass.h"
+#include<ShObjIdl.h>
 
 
 SystemClass::SystemClass()
@@ -49,7 +51,9 @@ bool SystemClass::Initialize()
 		return false;
 	}
 
+
 	// m_Graphics 객체 초기화.
+
 	return m_Graphics->Initialize(screenWidth, screenHeight, m_hwnd);
 }
 
@@ -139,7 +143,6 @@ LRESULT CALLBACK SystemClass::MessageHandler(HWND hwnd, UINT umsg, WPARAM wparam
 	return DefWindowProc(hwnd, umsg, wparam, lparam);
 }
 
-
 void SystemClass::InitializeWindows(int& screenWidth, int& screenHeight)
 {
 	// 외부 포인터를 이 객체로 지정합니다
@@ -162,7 +165,7 @@ void SystemClass::InitializeWindows(int& screenWidth, int& screenHeight)
 	wc.hIconSm = wc.hIcon;
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
-	wc.lpszMenuName = L"DirecX11";
+	wc.lpszMenuName = NULL;
 	wc.lpszClassName = m_applicationName;
 	wc.cbSize = sizeof(WNDCLASSEX);
 
@@ -194,8 +197,8 @@ void SystemClass::InitializeWindows(int& screenWidth, int& screenHeight)
 	else
 	{
 		// 윈도우 모드의 경우 800 * 600 크기를 지정합니다.
-		screenWidth = 1280;
-		screenHeight = 720;
+		screenWidth = 1366;
+		screenHeight = 768;
 
 		// 윈도우 창을 가로, 세로의 정 가운데 오도록 합니다.
 		posX = (GetSystemMetrics(SM_CXSCREEN) - screenWidth) / 2;
@@ -204,7 +207,7 @@ void SystemClass::InitializeWindows(int& screenWidth, int& screenHeight)
 
 	// 윈도우를 생성하고 핸들을 구합니다.
 	m_hwnd = CreateWindowEx(WS_EX_APPWINDOW, m_applicationName, m_applicationName,
-		WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_POPUP| WS_SYSMENU | WS_CAPTION | WS_MAXIMIZEBOX | WS_MINIMIZEBOX,
+		WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_POPUP| WS_SYSMENU |WS_CAPTION ,
 		posX, posY, screenWidth, screenHeight, NULL, NULL, m_hinstance, NULL);
 
 	// 윈도우를 화면에 표시하고 포커스를 지정합니다
@@ -236,11 +239,13 @@ void SystemClass::ShutdownWindows()
 }
 
 
-
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT umessage, WPARAM wparam, LPARAM lparam)
 {
+	if (ImGui_ImplWin32_WndProcHandler(hwnd, umessage, wparam, lparam))
+		return true;
 
 	switch (umessage)
 	{
@@ -257,7 +262,11 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT umessage, WPARAM wparam, LPARAM lparam)
 		PostQuitMessage(0);
 		return 0;
 	}
-
+	case WM_CREATE: {
+		
+		AllocConsole();
+		break;
+	}
 	case WM_SIZE:
 	{
 
@@ -267,14 +276,16 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT umessage, WPARAM wparam, LPARAM lparam)
 
 			int w = static_cast<UINT>(rc.right - rc.left);
 			int h = static_cast<UINT>(rc.bottom - rc.top);
-			m_Graphics->WindowResize(w, h,hwnd);
+			m_Graphics->WindowResize(w, h, hwnd);
 		}
 		break;
 	}
 	// 그 외의 모든 메시지들은 시스템 클래스의 메시지 처리로 넘깁니다.
-	default:
-	{
-		return ApplicationHandle->MessageHandler(hwnd, umessage, wparam, lparam);
+
+	 default:
+	 {
+	 	return ApplicationHandle->MessageHandler(hwnd, umessage, wparam, lparam);
+	 }
 	}
-	}
+	
 }

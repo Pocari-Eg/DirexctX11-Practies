@@ -1,0 +1,39 @@
+﻿  imgui.cpp
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_impl_dx11.cpp
+  imgui_impl_win32.cpp
+  imgui_tables.cpp
+  imgui_widgets.cpp
+  CameraClass.cpp
+C:\Users\cksdu\Desktop\DirexctX11-Practies\DirectX11\source\CameraClass.cpp(1,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'stdafx.h': No such file or directory
+  D3DClass.cpp
+C:\Users\cksdu\Desktop\DirexctX11-Practies\DirectX11\source\D3DClass.cpp(1,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'stdafx.h': No such file or directory
+  DDSTextureLoader.cpp
+C:\Users\cksdu\Desktop\DirexctX11-Practies\DirectX11\source\DDSTextureLoader.cpp(20,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'stdafx.h': No such file or directory
+  DirectX11.cpp
+C:\Users\cksdu\Desktop\DirexctX11-Practies\DirectX11\source\DirectX11.cpp(4,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'stdafx.h': No such file or directory
+  GraphicsClass.cpp
+C:\Users\cksdu\Desktop\DirexctX11-Practies\DirectX11\source\GraphicsClass.cpp(1,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'stdafx.h': No such file or directory
+  GUIClass.cpp
+C:\Users\cksdu\Desktop\DirexctX11-Practies\DirectX11\source\GUIClass.cpp(1,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'GUIClass.h': No such file or directory
+  InputClass.cpp
+C:\Users\cksdu\Desktop\DirexctX11-Practies\DirectX11\source\InputClass.cpp(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+C:\Users\cksdu\Desktop\DirexctX11-Practies\DirectX11\source\InputClass.cpp(1,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'stdafx.h': No such file or directory
+  LightClass.cpp
+C:\Users\cksdu\Desktop\DirexctX11-Practies\DirectX11\source\LightClass.cpp(1,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'LightClass.h': No such file or directory
+  ModelLoader.cpp
+C:\Users\cksdu\Desktop\DirexctX11-Practies\DirectX11\source\ModelLoader.cpp(1,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'ModelLoader.h': No such file or directory
+  ShaderClass.cpp
+C:\Users\cksdu\Desktop\DirexctX11-Practies\DirectX11\source\ShaderClass.cpp(1,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'stdafx.h': No such file or directory
+  stdafx.cpp
+C:\Users\cksdu\Desktop\DirexctX11-Practies\DirectX11\source\stdafx.cpp(5,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'stdafx.h': No such file or directory
+  SystemClass.cpp
+C:\Users\cksdu\Desktop\DirexctX11-Practies\DirectX11\source\SystemClass.cpp(1,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'stdafx.h': No such file or directory
+  TextureClass.cpp
+C:\Users\cksdu\Desktop\DirexctX11-Practies\DirectX11\source\TextureClass.cpp(1,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'stdafx.h': No such file or directory
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  TextureLoader.cpp
+C:\Users\cksdu\Desktop\DirexctX11-Practies\DirectX11\source\TextureLoader.cpp(41,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'TextureLoader.h': No such file or directory
+  코드를 생성하고 있습니다...
