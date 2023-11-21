@@ -262,11 +262,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT umessage, WPARAM wparam, LPARAM lparam)
 		PostQuitMessage(0);
 		return 0;
 	}
-	case WM_CREATE: {
-		
-		AllocConsole();
-		break;
-	}
 	case WM_SIZE:
 	{
 

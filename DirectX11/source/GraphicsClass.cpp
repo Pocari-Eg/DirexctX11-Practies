@@ -6,6 +6,8 @@
 #include "Object.h"
 #include "graphicsclass.h"
 #include "LightClass.h"
+
+
 #include"GUIClass.h"
 
 GraphicsClass::GraphicsClass()
@@ -47,7 +49,7 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		return false;
 	}
 
-	m_Gui->Initialize(hwnd, m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(),m_Direct3D->GetRenderTargetView());
+	m_Gui->Initialize(this,hwnd, m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(),m_Direct3D->GetRenderTargetView());
 
 
 	// m_Camera °´Ã¼ »ý¼º
@@ -55,17 +57,6 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	if (!m_Camera)
 	{
 		return false;
-	}
-
-
-
-
-	
-	m_ModelLoader = new ModelLoader;
-	if(!m_ModelLoader->Load(hwnd, m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), "../DirectX11/models/sphere.dae"))
-	{
-		 MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
-			return false;
 	}
 
 
@@ -83,16 +74,19 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		return false;
 	}
 
+
+	m_ModelLoader = new ModelLoader;
+	if (!m_ModelLoader)
+	{
+		return false;
+	}
+
 	m_Object = new Object;
-	if(!m_Object)
+	if (!m_Object)
 	{
 		return false;
 	}
-	if (!m_Object->Initialize(m_ModelLoader, m_Shader))
-	{
-		MessageBox(hwnd, L"Could not initialize the Main object.", L"Error", MB_OK);
-		return false;
-	}
+
 
 	m_Light = new LightClass;
 	if (!m_Light)
@@ -115,7 +109,6 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	m_Camera->Render();
 	XMMATRIX BaseViewMatrix;
 	m_Camera->GetViewMatrix(BaseViewMatrix);
-
 
 
 	return true;
@@ -238,6 +231,52 @@ void GraphicsClass::MouseInput(DIMOUSESTATE mouseState)
 
 }
 
+bool GraphicsClass::LoadModeldData(HWND hwnd, std::string filename)
+{
+
+	m_ModelLoader = new ModelLoader;
+	if (!m_ModelLoader)
+	{
+		return false;
+	}
+
+	m_Object = new Object;
+	if (!m_Object)
+	{
+		return false;
+	}
+
+	if (!m_ModelLoader->Load(hwnd,m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), filename))
+	{
+		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
+		return false;
+	}
+	if (!m_Object->Initialize(m_ModelLoader, m_Shader))
+	{
+		MessageBox(hwnd, L"Could not initialize the Main object.", L"Error", MB_OK);
+		return false;
+	}
+
+	return true;
+}
+
+void GraphicsClass::CameraZoomIO(float Distance)
+{
+
+	XMFLOAT3 CameraPos = DefaultCameraPos;
+	const XMFLOAT3 cameraForwardVec = m_Camera->GetCameraFoward();
+
+	
+
+
+	CameraPos.x -= cameraForwardVec.x * Distance;
+	CameraPos.y -= cameraForwardVec.y * Distance;
+	CameraPos.z -= cameraForwardVec.z * Distance;
+
+
+	m_Camera->SetPosition(CameraPos.x, CameraPos.y, CameraPos.z);
+}
+
 
 bool GraphicsClass::Render(float rotation)
 {
@@ -263,13 +302,11 @@ bool GraphicsClass::Render(float rotation)
 
    worldMatrix = XMMatrixRotationY(rotation);
 
-   LightData m_LightData = { m_Light->GetDirection(), m_Light->GetDffiuseColor(), m_Light->GetAmbientColor(),
-		m_Camera->GetPosition(), m_Light->GetSpecularColor(),m_Light->GetSpecularPower() };
-
-  
-
-
-	m_Object->Draw(m_Direct3D->GetDeviceContext(), worldMatrix, viewMatrix, projectionMatrix, m_LightData);
+   if (m_Object->IsReady()) {
+	   LightData m_LightData = { m_Light->GetDirection(), m_Light->GetDffiuseColor(), m_Light->GetAmbientColor(),
+			m_Camera->GetPosition(), m_Light->GetSpecularColor(),m_Light->GetSpecularPower() };
+	   m_Object->Draw(m_Direct3D->GetDeviceContext(), worldMatrix, viewMatrix, projectionMatrix, m_LightData);
+   }
 
 	m_Gui->Draw();
 	

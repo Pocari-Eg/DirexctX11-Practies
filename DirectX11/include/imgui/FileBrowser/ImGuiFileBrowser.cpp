@@ -821,6 +821,7 @@ namespace imgui_addons
 
                 //Remove trailing "*" returned by ** dir->wdirp->patt **
                 current_directory.pop_back();
+//                current_directory += "models/";
                 current_path = current_directory;
 
                 //Create a vector of each directory in the file path for the filepath bar. Not Necessary for linux as starting directory is "/"

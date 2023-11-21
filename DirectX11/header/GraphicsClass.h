@@ -8,7 +8,7 @@ const bool VSYNC_ENABLED = true;
 const float SCREEN_DEPTH = 1000.0f;
 const float SCREEN_NEAR = 0.1f;
 
-
+using namespace DirectX;
 class D3DClass;
 class CameraClass;
 class Shaderclass;
@@ -35,8 +35,11 @@ public:
 	bool WindowResize(int width, int height,HWND hwnd);
 
 	void MouseInput(DIMOUSESTATE mouseState);
-private:
 
+
+	bool LoadModeldData(HWND hwnd, std::string filename);
+
+	void CameraZoomIO(float Distance);
 
 
 private:
@@ -52,5 +55,4 @@ private:
 	GUIClass* m_Gui = nullptr;
 
 	XMFLOAT3 DefaultCameraPos;
-
 };

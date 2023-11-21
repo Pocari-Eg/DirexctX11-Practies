@@ -14,7 +14,7 @@ class Object
 private:
 	ModelLoader* m_Model;
 	Shaderclass* m_Shader;
-
+	bool bIsReady = false;
 public:
 
 	Object(){}
@@ -22,6 +22,7 @@ public:
 	~Object(){}
 
 
+	bool IsReady() { return bIsReady; }
 
 	bool Initialize(ModelLoader* NewModel, Shaderclass* NewShader){
 
@@ -30,6 +31,8 @@ public:
 
 		m_Model = NewModel;
 		m_Shader = NewShader;
+
+		bIsReady = true;
 
 		return true;
 	}
