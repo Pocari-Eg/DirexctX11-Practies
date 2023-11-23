@@ -29,19 +29,21 @@ public:
 
 	bool Initialize(int, int, HWND);
 	void Shutdown();
-	bool Frame(int,int);
+	bool Frame(int, int);
 	bool Render(float);
-	
-	bool WindowResize(int width, int height,HWND hwnd);
+
+	bool WindowResize(int width, int height, HWND hwnd);
 
 	void MouseInput(DIMOUSESTATE mouseState);
 
 
+
+
+	//imguiControl
 	bool LoadModeldData(HWND hwnd, std::string filename);
-
 	void CameraZoomIO(float Distance);
-
-
+	void SetDiffuseColor(float, float, float, float);
+	void SetClearColor(float, float, float, float);
 private:
 	D3DClass* m_Direct3D = nullptr;
 	CameraClass* m_Camera = nullptr;
@@ -55,4 +57,6 @@ private:
 	GUIClass* m_Gui = nullptr;
 
 	XMFLOAT3 DefaultCameraPos;
+
+	XMFLOAT4 ClearColor = { 0.45f, 0.55f, 0.60f, 1.0f };
 };

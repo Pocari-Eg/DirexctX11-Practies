@@ -41,6 +41,7 @@ bool GUIClass::Initialize(GraphicsClass* graphics ,HWND hwnd, ID3D11Device* devi
     ImGui_ImplWin32_Init(m_hwnd);
     ImGui_ImplDX11_Init(m_device, m_deviceContext);
 
+
     // Our state
      return true;
 }
@@ -73,14 +74,20 @@ void GUIClass::Draw()
         {
             m_Graphics->CameraZoomIO(f);
         }
-       
 
+        ImGui::Text("Clear Color");
+        if (ImGui::ColorEdit3("Clear", (float*)&Clear_color))
+        {
+            m_Graphics->SetClearColor(Clear_color.x, Clear_color.y, Clear_color.z, Clear_color.w);
+        }
+  
+          ImGui::Text("Diffuse Color");
+          if (ImGui::ColorEdit4("Diffuse", (float*)&Diffuse_color))
+          {
+              m_Graphics->SetDiffuseColor(Diffuse_color.x, Diffuse_color.y, Diffuse_color.z, Diffuse_color.w);
+         }
+   
         ImGui::Text("(%.1f FPS)", m_io->Framerate);
-
-
-             
-      
-
         ImGui::End();
     }
 

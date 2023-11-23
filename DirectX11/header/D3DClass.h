@@ -11,7 +11,7 @@ public:
 	bool Initialize(int, int, bool, HWND, bool, float, float);
 	void Shutdown();
 
-	void BeginScene(float, float, float, float);
+	void BeginScene(XMFLOAT4);
 	void EndScene();
 
 	ID3D11Device* GetDevice();

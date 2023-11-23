@@ -277,12 +277,22 @@ void GraphicsClass::CameraZoomIO(float Distance)
 	m_Camera->SetPosition(CameraPos.x, CameraPos.y, CameraPos.z);
 }
 
+void GraphicsClass::SetDiffuseColor(float r, float g, float b , float a)
+{
+	m_Light->SetDiffuseColor(r, g, b, a);
+}
+
+void GraphicsClass::SetClearColor(float r,  float g, float b, float a)
+{
+	ClearColor = { r,g,b,a };
+}
+
 
 bool GraphicsClass::Render(float rotation)
 {
 
 	// 씬을 그리기 위해 버퍼를 지웁니다
-	m_Direct3D->BeginScene(0.45f, 0.55f, 0.60f, 1.0f);
+	m_Direct3D->BeginScene(ClearColor);
 
 	// 카메라의 위치에 따라 뷰 행렬을 생성합니다
 	m_Camera->Render();

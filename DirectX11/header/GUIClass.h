@@ -32,7 +32,9 @@ private:
 	imgui_addons::ImGuiFileBrowser file_dialog;
 	ImGuiIO* m_io;
 	ID3D11RenderTargetView* g_mainRenderTargetView;
+	ImVec4 Diffuse_color = ImVec4(1.00f, 1.00f, 1.00f, 1.00f);
 
+	ImVec4 Clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.0f);
 	GraphicsClass* m_Graphics = nullptr;
 };
 

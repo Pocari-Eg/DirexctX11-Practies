@@ -386,10 +386,10 @@ void D3DClass::Shutdown()
 }
 
 
-void D3DClass::BeginScene(float red, float green, float blue, float alpha)
+void D3DClass::BeginScene(XMFLOAT4 ClearColor)
 {
 	// 버퍼를 지울 색을 설정합니다
-	float color[4] = { red, green, blue, alpha };
+	float color[4] = { ClearColor.x, ClearColor.y, ClearColor.z, ClearColor.w };
 
 
 	// 백버퍼를 지웁니다
